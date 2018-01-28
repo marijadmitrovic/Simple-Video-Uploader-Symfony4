@@ -35,11 +35,13 @@ class RegistrationController extends Controller
             $em->persist($user);
             $em->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
 
+
+            $this->addFlash('success','You are registered !');
             return $this->redirectToRoute('home');
         }
+
+
 
         return $this->render(
             'registration/register.html.twig',

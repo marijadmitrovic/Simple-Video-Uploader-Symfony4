@@ -12,13 +12,22 @@
     {% endblock %}
 </head>
 <body>
-<div id="fb-root"></div>
+
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
     {% block nav %}
 
-        <header class="masthead  " id="hed">
+
+
+
+        <header class="masthead mb-auto " >
+
             <div class="inner">
+
+                {#todo logo#}
+
+
                 <h3 class="masthead-brand">Logo</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link {% if app.request.attributes.get('_route') == 'home'%}active{% endif %}" href="{{ path('home') }}">Home</a>
@@ -30,8 +39,6 @@
                        class="nav-link {% if app.request.attributes.get('_route') == 'logout'%}active{% endif %}"
                     >Logout</a>
                     {%  endif %}
-
-
                 </nav>
             </div>
         </header>
@@ -70,7 +77,8 @@
 
 
     {% endblock %}
-</div> </body>
+</div>
+</body>
 </html>
 
 
