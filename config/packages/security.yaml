@@ -23,8 +23,8 @@ security:
                 target: /
 
     access_control:
-          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-          - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+          - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+          - { path: ^/new_video, roles: IS_AUTHENTICATED_FULLY }
 
 
 

@@ -13,17 +13,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends Controller
 {
 
-    /**
-     * @Route("/", name="home")
-     */
-    public  function homeAction(){
-
-        return $this->render(
-            'viv/home.html.twig');
-
-    }
-
-
 
     /**
      * @Route("/register", name="user_registration")

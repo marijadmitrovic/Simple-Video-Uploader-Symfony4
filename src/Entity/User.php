@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -48,17 +49,27 @@ class User implements UserInterface, \Serializable
      */
     private $email;
 
+//    /**
+//     * @ORM\Column(name="is_active", type="boolean")
+//     */
+//    private $isActive;
+
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video",mappedBy="user")
      */
-    private $isActive;
+    private $video;
 
-    public function __construct()
-    {
-        $this->isActive = true;
 
-        // $this->salt = md5(uniqid('', true));
+    public function __construct() {
+        $this->video = new ArrayCollection();
     }
+
+//    public function __construct()
+//    {
+//        $this->isActive = true;
+//
+//        // $this->salt = md5(uniqid('', true));
+//    }
 
     public function getUsername()
     {
@@ -164,21 +175,21 @@ class User implements UserInterface, \Serializable
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getisActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @param mixed $isActive
-     */
-    public function setIsActive($isActive): void
-    {
-        $this->isActive = $isActive;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getisActive()
+//    {
+//        return $this->isActive;
+//    }
+//
+//    /**
+//     * @param mixed $isActive
+//     */
+//    public function setIsActive($isActive): void
+//    {
+//        $this->isActive = $isActive;
+//    }
 
     /**
      * @return mixed
@@ -196,7 +207,36 @@ class User implements UserInterface, \Serializable
         $this->plainPassword = $plainPassword;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getVideo()
+    {
+        return $this->video;
+    }
 
+    /**
+     * @param mixed $video
+     */
+    public function setVideo($video): void
+    {
+        $this->video = $video;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../public/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/video';
+    }
 
 
 }

@@ -24,6 +24,15 @@ class LoginController extends Controller
 
 
 
+        //todo napraviti poruku
+//        if ($lastUsername->isSubmitted() && $lastUsername->isValid()) {
+//            $user = $form->getData();
+//
+//            $this->addFlash('success','Loged in!');
+//            return $this->redirectToRoute('home');
+//        }
+
+
         return $this->render('security/login.html.twig', [
             'errors' => $errors,
             'username' => $lastUsername

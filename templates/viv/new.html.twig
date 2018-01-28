@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+     <header class="masthead  " id="hed">
+            <div class="inner">
+                <h3 class="masthead-brand">Logo</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'home'%}active{% endif %}" href="{{ path('home') }}">Home</a>
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'new_video'%}active{% endif %}" href="{{ path('new_video') }}">Add Video</a>
+                    {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ logout_path() }}"  id="logout"
+                       class="nav-link {% if app.request.attributes.get('_route') == 'logout'%}active{% endif %}"
+                    >Logout</a>
+                    {%  endif %}
+                </nav>
+            </div>
+     </header>
+
+{% endblock %}
+
+{% block body %}
+
+      <div class="container">
+        <div class="row">
+             <div class="col-md-12">
+
+                  {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+
+
+
+                        <a href="{{ path('home') }}" class="btn btn-secondary">Back</a>
+                        <br> <br>
+
+                        <h1>New Video</h1>
+
+                        {{ form_start(videoForm) }}
+
+                        {{ form_widget(videoForm) }}
+
+
+                       <button type="submit" class="btn btn-primary">Save</button>
+                        {{ form_end(videoForm) }}
+
+
+              </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+         {% else %}
+             <div class="jumbotron" id="mess">
+                    <h1>Please login to add the video !</h1>
+             </div>
+            </div>
+         {%  endif %}
+
+        </div>
+
+{% endblock %}

@@ -1,28 +1,123 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Video Uploader!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {% endblock %}
+</head>
+<body>
+<div id="fb-root"></div>
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    {% block nav %}
+
+        <header class="masthead  " id="hed">
+            <div class="inner">
+                <h3 class="masthead-brand">Logo</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'home'%}active{% endif %}" href="{{ path('home') }}">Home</a>
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'new_video'%}active{% endif %}" href="{{ path('new_video') }}">Add Video</a>
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'login'%}active{% endif %}" href="{{ path('login') }}">Login</a>
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'user_registration'%}active{% endif %}" href="{{ path('user_registration') }}">Registration</a>
+                    {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ logout_path() }}"  id="logout"
+                       class="nav-link {% if app.request.attributes.get('_route') == 'logout'%}active{% endif %}"
+                    >Logout</a>
+                    {%  endif %}
 
 
-    </head>
-    <body>
+                </nav>
+            </div>
+        </header>
 
-    <div class="container">
-        {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
-             <a href="{{ logout_path() }}" class="btn btn-danger">Logout</a>
-        {%  endif %}
-        {% block body %}{% endblock %}
+    {% endblock %}
 
-    </div>
+
+
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+
+            {{ msg }}
+
+        </div>
+    {% endfor %}
+
+    {% block body %}
+    {% endblock %}
+
+
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+            <p ><a href="">by Marija Dmitrovic</a></p>
+        </div>
+    </footer>
+
+
     {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        {% endblock %}
-    </body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    {% endblock %}
+</div> </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#<!DOCTYPE html>#}
+{#<html>#}
+    {#<head>#}
+        {#<meta charset="UTF-8">#}
+        {#<title>{% block title %}Welcome!{% endblock %}</title>#}
+        {#<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+        {#{% block stylesheets %}#}
+            {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+        {#{% endblock %}#}
+
+
+    {#</head>#}
+    {#<body>#}
+
+    {#<div class="container">#}
+        {#{%  if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+             {#<a href="{{ logout_path() }}" class="btn btn-danger">Logout</a>#}
+        {#{%  endif %}#}
+        {#{% block body %}{% endblock %}#}
+
+    {#</div>#}
+    {#{% block javascripts %}#}
+            {#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
+            {#<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>#}
+            {#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>#}
+        {#{% endblock %}#}
+    {#</body>#}
+{#</html>#}
