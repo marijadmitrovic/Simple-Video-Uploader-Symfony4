@@ -37,8 +37,8 @@ class RegistrationController extends Controller
 
 
 
-            $this->addFlash('success','You are registered !');
-            return $this->redirectToRoute('home');
+            $this->addFlash('success','You are registered , now You can login !');
+            return $this->redirectToRoute('login');
         }
 
 

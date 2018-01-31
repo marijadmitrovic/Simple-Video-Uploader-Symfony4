@@ -4,20 +4,17 @@ namespace App\Controller;
 
 
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Entity\Video;
 
 use App\Form\VideoType;
-
-use App\Service\UploadManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Filesystem\Filesystem;
+
 
 
 
@@ -43,15 +40,16 @@ class VideoController extends Controller
 
     /**
      * @Route("/video/new", name="new_video")
-     * @param Request $request
-     * @return Response
      *
      */
-    public function newAction(Request $request, UploadManager $uploadManager)
+    public function newAction(Request $request )
     {
 
 
         $video = new Video();
+
+//        $video->setUser($user);
+
         $form = $this->createForm(VideoType::class, $video);
 
 
@@ -104,16 +102,13 @@ class VideoController extends Controller
     {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findBy(['video'=>$video]);
+            ->findBy(['video' => $video]);
 
         return $this->render('viv/show.html.twig', [
             'video' => $video,
             'comments' => $comments
 
         ]);
-
-
-
     }
 
 

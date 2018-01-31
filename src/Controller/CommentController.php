@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marija
- * Date: 30.1.18.
- * Time: 22.12
- */
+
 
 namespace App\Controller;
 
@@ -39,8 +34,6 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
 
@@ -61,11 +54,6 @@ class CommentController extends AbstractController
 
 
         }
-
-
-
-
-
 
 }
 

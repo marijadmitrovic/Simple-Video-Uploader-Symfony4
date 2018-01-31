@@ -22,28 +22,22 @@
                 <div class="row">
 
                     {% for video in videos %}
-                    <div class="col-md-6  offset-md-0">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" src="{{ asset('img/img2.jpeg') }}" alt="Card image cap">
-
-                            <div class="card-body">
-                                <h3>{{ video.title }}</h3>
-
-                                <p class="card-text">
-                                    {{ video.description|slice(0, 250)}} ...
-                                     </p>
-                                <a href="{{  path('show_video', {id: video.id})}}" class="btn btn-info">Details</a>
-
-
+                        <div class="col-md-6  offset-md-0">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" src="{{ asset('img/img2.jpeg') }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h3>{{ video.title }}</h3>
+                                    <p class="card-text">
+                                        {{ video.description|slice(0, 250)}} ...
+                                         </p>
+                                    <a href="{{  path('show_video', {id: video.id})}}" class="btn btn-info">Details</a>
+                                </div>
                             </div>
                         </div>
-
-                    </div>
                     {% endfor %}
-
                 </div>
+           </div>
         </div>
-
-        </div></main>
+    </main>
 
 {% endblock %}

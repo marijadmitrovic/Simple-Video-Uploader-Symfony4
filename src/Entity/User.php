@@ -49,15 +49,16 @@ class User implements UserInterface, \Serializable
      */
     private $email;
 
-//    /**
-//     * @ORM\Column(name="is_active", type="boolean")
-//     */
-//    private $isActive;
+
 
     /**
+     * @var ArrayCollection|Video[]
      * @ORM\OneToMany(targetEntity="App\Entity\Video",mappedBy="user")
      */
-    private $video;
+    private $videos;
+
+
+
 
 
     public function __construct() {
@@ -186,22 +187,7 @@ class User implements UserInterface, \Serializable
         $this->plainPassword = $plainPassword;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getVideo()
-    {
-        return $this->video;
-    }
-
-    /**
-     * @param mixed $video
-     */
-    public function setVideo($video): void
-    {
-        $this->video = $video;
-    }
-
+    
     public function __toString()
     {
         return $this->getUsername();
@@ -216,6 +202,24 @@ class User implements UserInterface, \Serializable
     {
         return 'uploads/video';
     }
+
+    /**
+     * @return Video[]|ArrayCollection
+     */
+    public function getVideos()
+    {
+        return $this->videos;
+    }
+
+    /**
+     * @param Video[]|ArrayCollection $videos
+     */
+    public function setVideos($videos): void
+    {
+        $this->videos = $videos;
+    }
+
+
 
 
 }
