@@ -13,6 +13,17 @@ class VideoRepository extends ServiceEntityRepository
         parent::__construct($registry, Video::class);
     }
 
+    public function findSometingh()
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.comments', 'c')->addSelect('c')
+            ->getQuery()
+            ->getResult();
+
+
+
+    }
+
     /*
     public function findBySomething($value)
     {

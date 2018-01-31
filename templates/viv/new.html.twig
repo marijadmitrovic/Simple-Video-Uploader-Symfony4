@@ -20,27 +20,24 @@
 
 {% block body %}
 
-      <div class="container">
+      <div class="container" >
         <div class="row">
              <div class="col-md-12">
 
                   {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
-
-
-
 
                         <a href="{{ path('home') }}" class="btn btn-secondary">Back</a>
                         <br> <br>
 
                         <h1>New Video</h1>
 
-                        {{ form_start(videoForm) }}
+                        {{ form_start(form) }}
 
-                        {{ form_widget(videoForm) }}
+                        {{ form_widget(form) }}
 
 
-                       <button type="submit" class="btn btn-primary">Save</button>
-                        {{ form_end(videoForm) }}
+                       <button type="submit" class="btn btn-info">Save</button>
+                        {{ form_end(form) }}
 
 
               </div>
@@ -53,7 +50,7 @@
              <div class="jumbotron" id="mess">
                     <h1>Please login to add the video !</h1>
 
-                 <a class="btn btn-info" href="{{ path('login') }}">Login</a>
+                 <a class="btn btn-info" href="{{ path('login') }}">Login</a>  <a  href="{{ path('user_registration') }}"><span style="color: #807C78"> or Register </span> </a>
 
              </div>
             </div>

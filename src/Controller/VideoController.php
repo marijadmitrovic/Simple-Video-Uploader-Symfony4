@@ -2,17 +2,26 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Comment;
 use App\Entity\Video;
+
 use App\Form\VideoType;
 
+use App\Service\UploadManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Filesystem\Filesystem;
 
-class VideoController extends AbstractController
+
+
+class VideoController extends Controller
 {
 
     /**
@@ -25,12 +34,8 @@ class VideoController extends AbstractController
             ->findAll();
 
         if (!$videos) {
-            throw $this->createNotFoundException(
-                'No videos found '
-            );
+            return $this->redirectToRoute('new_video');
         }
-
-
 
         return $this->render('viv/home.html.twig', ['videos' => $videos]);
     }
@@ -38,82 +43,78 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/video/new", name="new_video")
+     * @param Request $request
+     * @return Response
+     *
      */
-    public function newAction(Request $request){
-        $user = $this->getUser();
+    public function newAction(Request $request, UploadManager $uploadManager)
+    {
 
-        $form = $this->createForm(VideoType::class, new Video());
+
+        $video = new Video();
+        $form = $this->createForm(VideoType::class, $video);
+
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
-            // $path = $user->getUploadRootDir();
-            $path = __DIR__ . '/../../public/videob/';
 
-            if (!$formData->getFile()) {
-                $this->addFlash('error','Bad file, try again');
-            } else {
-                $tempPath = $formData->getFile()->getPathName();
-                try {
-                    $mimeType = $formData->getFile()->getMimeType();
-                    if ($mimeType) {
-                        $extension = explode('/', $mimeType)[1];
-                    } else {
-                        throw new Exception("Bad file! Try again");
-                    }
-                } catch (Exception $e) {
-                    $this->addFlash('error','Bad file, try again');
-                    return $this->redirectToRoute('home');
-                }
 
-                $fileName = 'video' . rand(10, 1000) . '.' .$extension;
-                $newPath = $path . $fileName;
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $video->getFile();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
-                copy($tempPath, $newPath);
-                unlink($tempPath);
 
-                $formData->setFile($fileName);
+            $file->move(
+                $this->getParameter('videos_directory'),
+                $fileName
+            );
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($formData);
-                $em->flush();
 
-                $this->addFlash('success','Video added');
-            }
+            $video->setFile($fileName);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($video);
 
-            return $this->redirectToRoute('home') ;
+            $em->flush();
+
+            $this->addFlash('success', 'Video added');
+
+            return $this->redirectToRoute('home');
         }
 
-        return $this->render('viv/new.html.twig',[
 
-            'videoForm' => $form->createView()
+        return $this->render('viv/new.html.twig', [
+
+            'form' => $form->createView()
         ]);
+
+
+
+
     }
 
 
     /**
      * @Route("/video/{id}", name="show_video")
      */
-    public function showAction($id)
+    public function showAction(Video $video,  Request $request)
     {
-        $video = $this->getDoctrine()
-            ->getRepository(Video::class)
-            ->find($id);
+        $comments = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->findBy(['video'=>$video]);
 
-        if (!$video) {
-            throw $this->createNotFoundException(
-                'No video found for id '.$id
-            );
-        }
+        return $this->render('viv/show.html.twig', [
+            'video' => $video,
+            'comments' => $comments
+
+        ]);
 
 
 
-        return $this->render('viv/show.html.twig', ['video' => $video]);
     }
-
-
-
 
 
 }

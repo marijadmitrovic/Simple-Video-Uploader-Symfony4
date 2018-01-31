@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
@@ -29,9 +32,27 @@ class Video
     private $description;
 
     /**
-     * @ORM\Column(type="string")
+     *@var string
+     * @Assert\File(mimeTypes={ "video/mp4" })
+     *@Assert\NotBlank(message="enter a video")
+     *@ORM\Column(type="string")
      */
     private $file;
+
+    /**
+     * @var ArrayCollection|Comment[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment",mappedBy="video")
+     */
+    private $comments;
+
+    /**
+     * @return mixed
+     */
+
+    public function __construct()
+    {
+        $this->comments= new ArrayCollection();
+    }
 
 
 
@@ -40,6 +61,9 @@ class Video
      *@JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+
+
 
 
     /**
@@ -117,9 +141,19 @@ class Video
     /**
      * @param mixed $user
      */
-    public function setUser($user): void
+    public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 
 }

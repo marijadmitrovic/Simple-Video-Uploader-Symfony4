@@ -64,12 +64,7 @@ class User implements UserInterface, \Serializable
         $this->video = new ArrayCollection();
     }
 
-//    public function __construct()
-//    {
-//        $this->isActive = true;
-//
-//        // $this->salt = md5(uniqid('', true));
-//    }
+
 
     public function getUsername()
     {
@@ -126,8 +121,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            // see section on salt below
-            // $this->salt,
+
         ));
     }
 
@@ -138,8 +132,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            // see section on salt below
-            // $this->salt
+
             ) = unserialize($serialized);
     }
 
@@ -175,21 +168,7 @@ class User implements UserInterface, \Serializable
         $this->email = $email;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getisActive()
-//    {
-//        return $this->isActive;
-//    }
-//
-//    /**
-//     * @param mixed $isActive
-//     */
-//    public function setIsActive($isActive): void
-//    {
-//        $this->isActive = $isActive;
-//    }
+
 
     /**
      * @return mixed

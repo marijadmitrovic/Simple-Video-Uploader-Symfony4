@@ -2,6 +2,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    videos_directory: '%kernel.project_dir%/public/videob'
+
 
 services:
     # default configuration for services in *this* file
