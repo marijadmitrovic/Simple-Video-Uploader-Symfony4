@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="users")
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Email already taken")
@@ -62,7 +62,7 @@ class User implements UserInterface, \Serializable
 
 
     public function __construct() {
-        $this->video = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
 

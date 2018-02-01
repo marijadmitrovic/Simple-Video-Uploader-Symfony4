@@ -42,13 +42,15 @@ class VideoController extends Controller
      * @Route("/video/new", name="new_video")
      *
      */
-    public function newAction(Request $request )
+    public function newAction(Request $request)
     {
+
+        $user = $this->getUser();
 
 
         $video = new Video();
+        $video->setUser($user);
 
-//        $video->setUser($user);
 
         $form = $this->createForm(VideoType::class, $video);
 
@@ -75,6 +77,7 @@ class VideoController extends Controller
             $video->setFile($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($video);
+
 
             $em->flush();
 

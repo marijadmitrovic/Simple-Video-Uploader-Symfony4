@@ -58,7 +58,7 @@ class Video
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User",inversedBy="video")
-     *@JoinColumn(name="user_id", referencedColumnName="id")
+     *
      */
     private $user;
 
@@ -138,10 +138,8 @@ class Video
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser(User $user): void
+
+    public function setUser($user): void
     {
         $this->user = $user;
     }

@@ -38,24 +38,22 @@
                 </div>
               </div>
            </div>
+          <div class="row ">
+              <div class="col-10">
+               <h3>Comments : {{ comments|length }} </h3>
+                    {% for comment in comments %}
+                          <div id="comment">
 
+                            <h4> Name : {{ comment.name }}</h4>
+                            <hr>
+                            <br>
+                            <p> {{ comment.text }}</p>
+                          </div>
+                          <br>
 
-          <h3>Comments : </h3>
-            {% for comment in comments %}
-                <div class="row  align-items-center">
-                  <div class="col-8 col-offset-2">
-
-                      <div style=" border: 1px solid black;text-align: center; color:#313131">
-
-                        <h4> Name : {{ comment.name }}</h4>
-                        <hr>
-                        <br>
-                        <p> {{ comment.text }}</p>
-                      </div>
-                      <br>
-                  </div>
-                </div>
-            {% endfor %}
+                    {% endfor %}
+              </div>
+          </div>
       </div>
 
     </div>
